@@ -1,0 +1,13 @@
+@import "variables";
+
+.ryver-view {
+    &-header {
+        height: 40px;
+        width: 100%;
+        background-color: $color-regal-blue;
+    }
+
+    &-body {
+        background-color: $color-catskill-white;
+    }
+}

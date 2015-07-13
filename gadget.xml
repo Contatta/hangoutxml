@@ -7,35 +7,21 @@
     <Content type="html"><![CDATA[
         <html>
             <head>
-               <script type="text/javascript" src="//www.google.com/jsapi"></script>
+                <style href="./css/main.css"/>
+
+                <script type="text/javascript" src="//www.google.com/jsapi"></script>
                 <script type="text/javascript">google.load("jquery", "2.1.1");</script>
                 <script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
+                <script src="./js/main.js"></script>
             </head>
             <body>
-                <h3>Test Ryver Hangout</h3>
+                <header class="ryver-view-header">
+                    <span id="ryver-room"></span>
+                </header>
 
-                <p>this is some simple text. Where does this appear?</p>
-
-                <script>
-                    var state = null,
-                    participants = null;
-
-                    function onStateChange(evt) {
-                        state = evt.state;
-                    }
-
-                    function onParticipantChange(evt) {
-                        participants = evt.participants;
-                    }
-
-                    function onApiReady(evt) {
-                        var params = gadgets.views.getParams()['appData'];
-                    }
-
-                    gapi.hangout.data.onStateChange.add(onStateChange);
-                    gapi.hangout.data.onParticipantChange.add(onParticipantChange);
-                    gapi.hangout.onApiReady.add(onApiReady);
-                </script>
+                <main class="ryver-view-body">
+                    <ul id="ryver-participant-list"></ul>
+                </main>
             </body>
         </html>
     ]]></Content>
