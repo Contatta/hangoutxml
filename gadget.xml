@@ -1,0 +1,43 @@
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+    <ModulePrefs title="Ryver Hangout">
+        <Require feature="rpc"/>
+        <Require feature="views"/>
+    </ModulePrefs>
+    <Content type="html"><![CDATA[
+        <html>
+            <head>
+               <script type="text/javascript" src="//www.google.com/jsapi"></script>
+                <script type="text/javascript">google.load("jquery", "2.1.1");</script>
+                <script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
+            </head>
+            <body>
+                <h3>Test Ryver Hangout</h3>
+
+                <p>this is some simple text. Where does this appear?</p>
+
+                <script>
+                    var state = null,
+                    participants = null;
+
+                    function onStateChange(evt) {
+                        state = evt.state;
+                    }
+
+                    function onParticipantChange(evt) {
+                        participants = evt.participants;
+                    }
+
+                    function onApiReady(evt) {
+                        var params = gadgets.views.getParams()['appData'];
+                    }
+
+                    gapi.hangout.data.onStateChange.add(onStateChange);
+                    gapi.hangout.data.onParticipantChange.add(onParticipantChange);
+                    gapi.hangout.onApiReady.add(onApiReady);
+                </script>
+            </body>
+        </html>
+    ]]></Content>
+</Module>
