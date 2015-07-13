@@ -7,12 +7,12 @@
     <Content type="html"><![CDATA[
         <html>
             <head>
-                <style href="./css/main.css"/>
+                <style href="http://googlehangoutxml.ryver.com/css/main.css"/>
 
                 <script type="text/javascript" src="//www.google.com/jsapi"></script>
                 <script type="text/javascript">google.load("jquery", "2.1.1");</script>
                 <script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
-                <script src="./js/main.js"></script>
+                <script src="http://googlehangoutxml.ryver.com/js/main.js"></script>
             </head>
             <body>
                 <header class="ryver-view-header">
