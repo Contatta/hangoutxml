@@ -8,7 +8,8 @@
         <html>
             <head>
                 <style href="http://googlehangoutxml.ryver.com/css/main.css"/>
-                <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>                <script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
+                <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                <script src="http://plus.google.com/hangouts/_/api/v1/hangout.js"></script>
                 <script src="http://googlehangoutxml.ryver.com/js/main.js"></script>
             </head>
             <body>
