@@ -1,30 +1,57 @@
 (function(google, $) {
-    var state = null,
-        participants = null;
-
-    function onStateChange(evt) {
-        state = evt.state;
-        console.debug(state);
-    }
+    var endpoint = 'https://${instance}.ryver.com/api/1/odata.svc/workrooms(${id})/Chat.PostMessage';
 
     function onParticipantChange(evt) {
-        participants = evt.participants;
-        //for (var i = 0;i < participants.length; i++) {
-        //
-        //}
-        console.debug(participants);
+        console.debug(evt);
     }
 
     function onApiReady(evt) {
-        var params = gadgets.views.getParams()['appData'];
+        var params = google.hangout.getStartData();
+
         console.debug(params);
+
+        if (params) {
+            sharedState(params);
+            consumer({'body': google.hangout.getHangoutUrl()});
+        }
+
+        google.hangout.onApiReady.remove(onApiReady);
     }
 
     function sharedState(data) {
         google.hangout.data.submitDelta(data);
     }
 
-    google.hangout.data.onStateChange.add(onStateChange);
+    function setupEndpoint() {
+        var state = google.hangout.data.getState();
+
+        if (!state) return null;
+
+        state = JSON.parse(state);
+
+        var map = {
+            '${instance}': state.instance,
+            '${id}': state.id
+        };
+
+        var re = new RegExp(Object.keys(map).join("|"),"gi");
+
+        return endpoint.replace(re, function(matched) {
+            return map[matched.toLowerCase()];
+        });
+    }
+
+    function consumer(data) {
+        console.debug('data: ', data);
+        console.debug('endpoint: ', setupEndpoint());
+
+        //return $.ajax({
+        //    url: setupEndpoint(),
+        //    type: 'POST',
+        //    data: data
+        //});
+    }
+
     google.hangout.data.onParticipantChange.add(onParticipantChange);
     google.hangout.onApiReady.add(onApiReady);
 })(gapi, JQuery);

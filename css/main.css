@@ -1,8 +1,13 @@
+ul {
+  padding: 0;
+  margin: 0; }
+
 .ryver-view-header {
   height: 40px;
   width: 100%;
   background-color: #00548B; }
 .ryver-view-body {
-  background-color: #DEE9F0; }
+  background-color: #DEE9F0;
+  height: calc(100% - 40px); }
 
 /*# sourceMappingURL=main.css.map */
