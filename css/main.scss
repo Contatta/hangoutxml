@@ -31,10 +31,14 @@ ul {
 .ryver-view {
     &-header {
         height: 40px;
+        line-height: 40px;
         width: 100%;
         background-color: $color-regal-blue;
         color: $color-white;
         padding: 0 16px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     &-body {

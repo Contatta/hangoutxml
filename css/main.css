@@ -24,10 +24,14 @@ ul {
 
 .ryver-view-header {
   height: 40px;
+  line-height: 40px;
   width: 100%;
   background-color: #00548B;
   color: #FFFFFF;
-  padding: 0 16px; }
+  padding: 0 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
 .ryver-view-body {
   background-color: #DEE9F0;
   height: calc(100% - 40px); }
