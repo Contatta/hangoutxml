@@ -9,9 +9,8 @@
         if (evt.isApiReady) {
             var params = google.hangout.getStartData();
 
-            console.debug(params);
-
             if (params) {
+                params = JSON.parse(params);
                 sharedState(params);
                 consumer({'body': google.hangout.getHangoutUrl()});
             }
