@@ -1,6 +1,11 @@
 (function(gadgets, google, $) {
     var endpoint = 'https://${instance}.ryver.com/api/1/odata.svc/workrooms(${id})/Chat.PostMessage';
 
+    function setTitle(params) {
+        if (params && params.workroom && params.workroom.descriptor)
+            $('#ryver-room').text(params.workroom.descriptor);
+    }
+
     function onParticipantsChange(evt) {
         console.debug('participants changed: ', evt);
     }
@@ -22,6 +27,7 @@
 
             if (params) {
                 params = JSON.parse(params);
+                setTitle(params);
                 sharedState(params);
                 consumer({'body': google.hangout.getHangoutUrl()});
             }
