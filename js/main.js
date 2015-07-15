@@ -1,5 +1,5 @@
 (function(gadgets, google, $) {
-    var endpoint = 'https://${instance}.ryver.com/api/1/odata.svc/workrooms(${id})/Chat.PostMessage';
+    var endpoint = 'https://{instance}.ryver.com/api/1/odata.svc/workrooms({id})/Chat.PostMessage';
 
     function setTitle(params) {
         if (params && params.descriptor)
@@ -49,8 +49,8 @@
         if (!state) return null;
 
         var map = {
-            '${instance}': state.instance,
-            '${id}': state.id
+            '{instance}': state.instance,
+            '{id}': state.id
         };
 
         var re = new RegExp(Object.keys(map).join("|"),"gi");
