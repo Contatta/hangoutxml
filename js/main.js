@@ -48,8 +48,6 @@
 
         if (!state) return null;
 
-        state = JSON.parse(state);
-
         var map = {
             '${instance}': state.instance,
             '${id}': state.id
