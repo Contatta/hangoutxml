@@ -2,8 +2,8 @@
     var endpoint = 'https://${instance}.ryver.com/api/1/odata.svc/workrooms(${id})/Chat.PostMessage';
 
     function setTitle(params) {
-        if (params && params.workroom && params.workroom.descriptor)
-            $('#ryver-room').text(params.workroom.descriptor);
+        if (params && params.descriptor)
+            $('#ryver-room').text(params.descriptor);
     }
 
     function onParticipantsChange(evt) {
