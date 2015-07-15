@@ -58,7 +58,7 @@
 
         var re = new RegExp(Object.keys(map).join("|"),"gi");
 
-        return endpoint.replace(re, function(matched) {
+        endpoint = endpoint.replace(re, function(matched) {
             return map[matched.toLowerCase()];
         });
     }
