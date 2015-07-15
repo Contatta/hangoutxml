@@ -53,11 +53,11 @@
     }
 
     function setupEndpoint() {
-        var state = state || google.hangout.data.getState();
-        
+        var data = state || google.hangout.data.getState();
+
         var map = {
-            '{instance}': state.instance,
-            '{id}': state.id
+            '{instance}': data.instance,
+            '{id}': data.id
         };
 
         var re = new RegExp(Object.keys(map).join("|"),"gi");
