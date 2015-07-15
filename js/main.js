@@ -48,6 +48,8 @@
 
         if (!state) return null;
 
+        console.debug('state: ', state);
+
         var map = {
             '{instance}': state.instance,
             '{id}': state.id
