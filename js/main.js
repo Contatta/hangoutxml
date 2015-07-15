@@ -1,9 +1,14 @@
 (function(gadgets, google, $) {
-    var endpoint = 'https://{instance}.ryver.com/api/1/odata.svc/workrooms({id})/Chat.PostMessage';
+    var endpoint = 'https://{instance}.ryver.com/api/1/odata.svc/workrooms({id})/Chat.PostMessage',
+        state = null;
 
     function setTitle(params) {
         if (params && params.descriptor)
             $('#ryver-room').text(params.descriptor);
+    }
+
+    function onStateChange(evt) {
+        console.debug('state changed: ', evt);
     }
 
     function onParticipantsChange(evt) {
@@ -28,11 +33,12 @@
             if (params) {
                 params = JSON.parse(params);
                 setTitle(params);
-                setupEndpoint(params);
+                setupEndpoint();
                 updateSharedState(params);
                 consumer({'body': google.hangout.getHangoutUrl()});
             }
 
+            google.hangout.data.onStateChanged.add(onStateChange);
             google.hangout.onParticipantsChanged.add(onParticipantsChange);
             google.hangout.onParticipantsAdded.add(onParticipantsAdded);
             google.hangout.onParticipantsRemoved.add(onParticipantsRemoved);
@@ -41,11 +47,12 @@
     }
 
     function updateSharedState(data) {
+        state = data;
         google.hangout.data.submitDelta(data);
     }
 
-    function setupEndpoint(params) {
-        var state = params || google.hangout.data.getState();
+    function setupEndpoint() {
+        var state = state || google.hangout.data.getState();
 
         if (!state) return null;
 
@@ -66,13 +73,17 @@
     function consumer(data) {
         console.debug('data: ', data);
         console.debug('endpoint: ', endpoint);
+        console.debug('state: ', state);
 
         if (data && endpoint) {
             return $.ajax({
                 url: endpoint,
                 type: 'POST',
                 contentType: 'application/json',
-                data: data
+                data: data,
+                headers: {
+                    'Contatta-Session': state.session
+                }
             });
         }
     }
