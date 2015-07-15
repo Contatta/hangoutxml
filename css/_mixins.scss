@@ -1,0 +1,460 @@
+// todo: remove mixins that deal with prefixes in favor of a post processor task in grunt
+
+@mixin box-sizing($sizing: border-box)
+{
+    @each $prefix in -moz, -webkit {
+        #{$prefix}-box-sizing: $sizing;
+    }
+    box-sizing: $sizing;
+}
+
+@mixin user-select($select: auto)
+{
+    @each $prefix in -moz, -ms, -webkit {
+        #{$prefix}-user-select: $select;
+    }
+    user-select: $select;
+}
+
+@mixin transform($transform)
+{
+    @each $prefix in -moz, -ms, -o, -webkit {
+        #{$prefix}-transform: $transform;
+    }
+    transform: $transform;
+}
+
+@mixin transform-style($style)
+{
+    @each $prefix in -moz, -ms, -o, -webkit {
+        #{$prefix}-transform-style: $style;
+    }
+    transform-style: $style;
+}
+
+@mixin backface($visibility: visible)
+{
+    @each $prefix in -moz, -ms, -o, -webkit {
+        #{$prefix}-backface-visibility: $visibility;
+    }
+    backface-visibility: $visibility;
+}
+
+@mixin perspective($perspective)
+{
+    @each $prefix in -moz, -ms, -o, -webkit {
+        #{$prefix}-perspective: $perspective;
+    }
+    perspective: $perspective;
+}
+
+@mixin transition($property: all, $duration: 0.5s, $easing: ease, $delay: 0s)
+{
+    @each $prefix in -moz, -ms, -o, -webkit {
+        #{$prefix}-transition: $property $duration $easing $delay;
+    }
+    transition: $property $duration $easing $delay;
+}
+
+@mixin transition-transform($property: 'transform', $duration: 0.5s, $easing: ease)
+{
+    @each $prefix in -moz, -ms, -o, -webkit {
+        #{$prefix}-transition: $duration $easing #{prefix}-#{$property};
+    }
+    transition: $duration $easing #{$property};
+}
+
+@mixin animation($name: 'none', $duration: 0s, $iteration: 1)
+{
+    @each $prefix in -moz, -ms, -o, -webkit {
+        #{$prefix}-animation: #{$name} $duration $iteration;
+    }
+    animation: #{$name} $duration $iteration;
+}
+
+//@mixin linear-gradient($direction, $fromColor, $start: 0%, $toColor, $end: 100%)
+//{
+//    background-image: -moz-linear-gradient($direction, $fromColor $start, $toColor $end);
+//    background-image: -webkit-linear-gradient($direction, $fromColor $start, $toColor $end);
+//    background-image: -o-linear-gradient($direction, $fromColor $start, $toColor $end);
+//    background-image: -ms-linear-gradient($direction, $fromColor $start, $toColor $end);
+//    background-image: linear-gradient(to right, $fromColor $start, $toColor $end);
+//}
+
+@mixin keyframes($name)
+{
+    @-moz-keyframes #{$name} {
+        @content;
+    }
+
+    @-ms-keyframes #{$name} {
+        @content;
+    }
+
+    @-o-keyframes #{$name} {
+        @content;
+    }
+
+    @-webkit-keyframes #{$name} {
+        @content;
+    }
+
+    @keyframes #{$name} {
+        @content;
+    }
+}
+
+@mixin placeholder
+{
+    &::-moz-placeholder { @content; }
+    &:-moz-placeholder { @content; }
+    &:-ms-input-placeholder { @content; }
+    &::-webkit-input-placeholder { @content; }
+}
+
+@mixin border-arrow(
+$box-edge         : bottom,
+$edge-side        : center,
+$arrow-size       : 10px,
+$edge-side-offset : 0,
+$fill-color       : black,
+$border-color     : none,
+$border-style     : border) {
+
+    // initiate internal variables
+    $box-edge-inverse: bottom;
+    $edge-side-pos: $edge-side;
+    $edge-side-pos-value: 0;
+
+    // establish inverse variables
+    @if      $box-edge == top    { $box-edge-inverse: bottom; }
+    @else if $box-edge == right  { $box-edge-inverse: left;   }
+    @else if $box-edge == bottom { $box-edge-inverse: top;    }
+    @else if $box-edge == left   { $box-edge-inverse: right;  }
+
+    // calculate remaining internal variables
+    @if ($box-edge == 'top' or
+       $box-edge == 'bottom') {
+        @if $edge-side == center {
+            $edge-side-pos: left;
+            $edge-side-pos-value: 50%;
+            $edge-side-offset: (-$arrow-size);
+        }
+    }
+    @if ($box-edge == 'left' or
+       $box-edge == 'right') {
+        @if $edge-side == center {
+            $edge-side-pos: top;
+            $edge-side-pos-value: 50%;
+            $edge-side-offset: (-$arrow-size);
+        }
+    }
+
+    &:after, &:before {
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        margin: 0;
+        border: solid rgba($color-white, 0);
+    }
+
+    &:after  {
+        border-color: rgba($color-white, 0);
+        border-width: $arrow-size - 1;
+        #{$box-edge}: (-$arrow-size) - $arrow-size + 2;
+        border-#{$box-edge-inverse}-color: $fill-color;
+        #{$edge-side-pos}: $edge-side-pos-value;
+        margin-#{$edge-side-pos}: $edge-side-offset + 1;
+    }
+
+    @if $border-style == flag {
+        border-radius: 2px;
+        &:before {
+            border-color: rgba($color-white, 0);
+            border-width: $arrow-size - 1;
+            #{$box-edge}: (-$arrow-size) - $arrow-size + 2;
+            border-#{$box-edge-inverse}-color: $border-color;
+            #{$edge-side-pos}: $edge-side-pos-value;
+            margin-#{$edge-side-pos}: $edge-side-offset + 2;
+        }
+    } @else {
+        &:before {
+            border-color: rgba($color-white, 0);
+            border-width: $arrow-size;
+            #{$box-edge}: (-$arrow-size) - $arrow-size;
+            border-#{$box-edge-inverse}-color: $border-color;
+            #{$edge-side-pos}: $edge-side-pos-value;
+            margin-#{$edge-side-pos}: $edge-side-offset;
+        }
+    }
+}
+
+@mixin round-avatar($which: small, $border-color: $color-silver, $background: $color-white)
+{
+    $size: 48px;
+    $padding: 3px;
+    $border-style: solid;
+
+    @if $which == large
+    {
+        $size: 64px;
+    }
+    @else if $which == small
+    {
+        $size: 40px;
+    }
+    @else
+    {
+        $padding: 2px;
+    }
+
+    @if $border-color == none or $border-color == initial
+    {
+    }
+    @else
+    {
+        border-color: $border-color;
+    }
+
+    width: $size;
+    height: $size;
+    border-radius: 50%;
+    border-width: 3px;
+    padding: $padding;
+    background-color: $background;
+    border-style: $border-style;
+}
+
+//todo: this should be a placeholder
+@mixin flexbox
+{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+@mixin flex-direction($value: row)
+{
+    @each $prefix in -moz, -ms, -webkit {
+        #{$prefix}-flex-direction: $value;
+
+        @if $prefix == -webkit
+        {
+            $direction: normal;
+            $orient: horizontal;
+
+            @if $value == row-reverse
+            {
+                $direction: reverse;
+                $orient: horizontal;
+            }
+            @else if $value == column
+            {
+                $direction: normal;
+                $orient: vertical;
+            }
+            @else if $value == column-reverse
+            {
+                $box-direction: reverse;
+                $box-orient: vertical;
+            }
+
+            #{$prefix}-box-direction: $direction;
+            #{$prefix}-box-orient: $orient;
+        }
+    }
+    flex-direction: $value;
+}
+
+@mixin order($int: 0)
+{
+    -webkit-box-ordinal-group: $int + 1;
+               -ms-flex-order: $int;
+                -webkit-order: $int;
+                   -moz-order: $int;
+                        order: $int;
+}
+
+@mixin flex-grow($int: 0) {
+    -ms-flex-positive: $int;
+    -webkit-flex-grow: $int;
+     -webkit-box-flex: $int;
+       -moz-flex-grow: $int;
+            flex-grow: $int;
+}
+
+@mixin flex-shrink($int: 1) {
+    -webkit-flex-shrink: $int;
+      -ms-flex-negative: $int;
+       -moz-flex-shrink: $int;
+            flex-shrink: $int;
+}
+
+@mixin flex-basis($value: auto) {
+    -ms-flex-preferred-size: $value;
+         -webkit-flex-basis: $value;
+            -moz-flex-basis: $value;
+                 flex-basis: $value;
+}
+
+@mixin flex($fg: 1, $fs: null, $fb: null) {
+
+    // Set a variable to be used by box-flex properties
+    $fg-boxflex: $fg;
+
+    // Box-Flex only supports a flex-grow value so let's grab the
+    // first item in the list and just return that.
+    @if type-of($fg) == 'list' {
+        $fg-boxflex: nth($fg, 1);
+    }
+
+    @each $prefix in -moz, -ms, -webkit {
+        #{$prefix}-flex: $fg $fs $fb;
+
+        @if $prefix == -moz or $prefix == -webkit {
+            #{$prefix}-box-flex: $fg-boxflex;
+        }
+    }
+    flex: $fg $fs $fb;
+}
+
+@mixin flex-wrap($value: nowrap) {
+    @each $prefix in -moz, -ms, -webkit {
+        @if $prefix == -ms and $value == nowrap {
+            $value: none;
+        }
+        #{$prefix}-flex-wrap: $value;
+    }
+    flex-wrap: $value;
+}
+
+@mixin justify-content($value: flex-start) {
+    @if $value == flex-start {
+        -webkit-box-pack: start;
+        -ms-flex-pack: start;
+    } @else if $value == flex-end {
+        -webkit-box-pack: end;
+        -ms-flex-pack: end;
+    } @else if $value == space-between {
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+    } @else if $value == space-around {
+        -ms-flex-pack: distribute;
+    } @else {
+        -webkit-box-pack: $value;
+        -ms-flex-pack: $value;
+    }
+    -webkit-justify-content: $value;
+    -moz-justify-content: $value;
+    justify-content: $value;
+}
+
+@mixin align-self($value: auto) {
+    @each $prefix in -ms, -webkit {
+        #{$prefix}-align-self: $value;
+    }
+    align-self: $value;
+}
+
+@mixin align-items($value: auto) {
+    @each $prefix in -ms, -webkit {
+        #{$prefix}-align-items: $value;
+    }
+    align-items: $value;
+}
+
+@mixin retina-image($path, $retinaPath)
+{
+    background-image: url($path);
+    @media (-webkit-min-device-pixel-ratio:2)
+    {
+        background-image: url($retinaPath);
+    }
+}
+
+@mixin word-break
+{
+    -ms-word-break: break-all;
+    word-break: break-all;
+    word-break: break-word;
+
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+}
+
+@mixin icon
+{
+    font-family: 'ryver';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+}
+
+@mixin clear-fix
+{
+    content: " ";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+@mixin fixed-width-font
+{
+    font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
+}
+
+@mixin preloader($width: 32px, $height: 32px, $background: $color-white, $foreground: $color-black, $opacity: .6)
+{
+    font-size: 10px;
+    text-indent: -9999em;
+    width: $width;
+    height: $height;
+    border-radius: 50%;
+    background: $foreground;
+    background: -moz-linear-gradient(left bottom, $foreground 30%, rgba($foreground, 0) 100%);
+    background: -webkit-linear-gradient(left bottom, $foreground 30%, rgba($foreground, 0) 100%);
+    background: -o-linear-gradient(left bottom, $foreground 30%, rgba($foreground, 0) 100%);
+    background: -ms-linear-gradient(left bottom, $foreground 30%, rgba($foreground, 0) 100%);
+    background: linear-gradient(to right top, $foreground 30%, rgba($foreground, 0) 100%);
+    opacity: $opacity;
+    @include animation(preloader, 1.3s, infinite linear);
+
+    &:before
+    {
+        width: 50%;
+        height: 50%;
+        background: $foreground;
+        //background: rgba($foreground, 0.5);
+        border-radius: 100% 0 0 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: '';
+    }
+
+    &:after
+    {
+        background: $background;
+        width: 75%;
+        height: 75%;
+        border-radius: 50%;
+        content: '';
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+}
