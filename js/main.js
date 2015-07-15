@@ -9,6 +9,7 @@
 
     function onStateChange(evt) {
         console.debug('state changed: ', evt);
+        state = evt.state;
     }
 
     function onParticipantsChange(evt) {
@@ -32,9 +33,9 @@
 
             if (params) {
                 params = JSON.parse(params);
+                updateSharedState(params);
                 setTitle(params);
                 setupEndpoint();
-                updateSharedState(params);
                 consumer({'body': google.hangout.getHangoutUrl()});
             }
 
@@ -53,11 +54,7 @@
 
     function setupEndpoint() {
         var state = state || google.hangout.data.getState();
-
-        if (!state) return null;
-
-        console.debug('state: ', state);
-
+        
         var map = {
             '{instance}': state.instance,
             '{id}': state.id
