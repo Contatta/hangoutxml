@@ -78,7 +78,7 @@
                 type: 'POST',
                 contentType: 'application/json',
                 accepts: {'json': 'application/json'},
-                data: data,
+                data: JSON.stringify(data),
                 headers: {
                     'Contatta-Session': state.session
                 }
