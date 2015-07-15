@@ -6,16 +6,19 @@
     }
 
     function onApiReady(evt) {
-        var params = google.hangout.getStartData();
+        if (evt.isApiReady) {
+            var params = google.hangout.getStartData();
 
-        console.debug(params);
+            console.debug(params);
 
-        if (params) {
-            sharedState(params);
-            consumer({'body': google.hangout.getHangoutUrl()});
+            if (params) {
+                sharedState(params);
+                consumer({'body': google.hangout.getHangoutUrl()});
+            }
+
+            google.hangout.data.onParticipantChange.add(onParticipantChange);
+            google.hangout.onApiReady.remove(onApiReady);
         }
-
-        google.hangout.onApiReady.remove(onApiReady);
     }
 
     function sharedState(data) {
@@ -52,6 +55,5 @@
         //});
     }
 
-    google.hangout.data.onParticipantChange.add(onParticipantChange);
     google.hangout.onApiReady.add(onApiReady);
 })(gapi, jQuery);
