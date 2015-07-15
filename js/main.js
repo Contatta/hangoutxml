@@ -54,4 +54,4 @@
 
     google.hangout.data.onParticipantChange.add(onParticipantChange);
     google.hangout.onApiReady.add(onApiReady);
-})(gapi, JQuery);
+})(gapi, jQuery);
