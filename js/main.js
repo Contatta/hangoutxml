@@ -1,4 +1,4 @@
-(function(google, $) {
+(function(gadgets, google, $) {
     var endpoint = 'https://${instance}.ryver.com/api/1/odata.svc/workrooms(${id})/Chat.PostMessage';
 
     function onParticipantChange(evt) {
@@ -55,5 +55,9 @@
         //});
     }
 
-    google.hangout.onApiReady.add(onApiReady);
-})(gapi, jQuery);
+    function init() {
+        google.hangout.onApiReady.add(onApiReady);
+    }
+
+    gadgets.util.registerOnLoadHandler(init);
+})(gadgets, gapi, jQuery);
