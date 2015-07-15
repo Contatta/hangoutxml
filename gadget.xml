@@ -6,15 +6,20 @@
     </ModulePrefs>
     <Content type="html"><![CDATA[
         <!DOCTYPE html>
-        <script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <html>
+            <head>
+                <script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
+                <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+            </head>
+            <body>
+                <header class="ryver-view-header">
+                    <span id="ryver-room"></span>
+                </header>
 
-        <header class="ryver-view-header">
-            <span id="ryver-room"></span>
-        </header>
-
-        <main class="ryver-view-body">
-            <ul id="ryver-participant-list"></ul>
-        </main>
+                <main class="ryver-view-body">
+                    <ul id="ryver-participant-list"></ul>
+                </main>
+            </body>
+        </html>
     ]]></Content>
 </Module>
