@@ -1,8 +1,19 @@
 (function(gadgets, google, $) {
     var endpoint = 'https://${instance}.ryver.com/api/1/odata.svc/workrooms(${id})/Chat.PostMessage';
 
-    function onParticipantChange(evt) {
-        console.debug(evt);
+    function onParticipantsChange(evt) {
+        console.debug('participants changed: ', evt);
+    }
+
+    function onParticipantsAdded(evt) {
+        // todo: add participants to list
+        // todo: set room descriptor in header bar
+        console.debug('participants added: ', evt);
+    }
+
+    function onParticipantsRemoved(evt) {
+        // todo: remove participants from list
+        console.debug('participants removed: ', evt);
     }
 
     function onApiReady(evt) {
@@ -15,7 +26,9 @@
                 consumer({'body': google.hangout.getHangoutUrl()});
             }
 
-            google.hangout.onParticipantsChanged.add(onParticipantChange);
+            google.hangout.onParticipantsChanged.add(onParticipantsChange);
+            google.hangout.onParticipantsAdded.add(onParticipantsAdded);
+            google.hangout.onParticipantsRemoved.add(onParticipantsRemoved);
             google.hangout.onApiReady.remove(onApiReady);
         }
     }
