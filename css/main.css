@@ -1,5 +1,22 @@
+* {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  outline: none;
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: none;
+  -webkit-tap-highlight-color: transparent; }
+
 html, body {
   height: 100%; }
+
+html {
+  font: 0.8em/1.5 "Open Sans", sans-serif;
+  color: #000000;
+  height: 100%;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
 
 ul {
   padding: 0;
@@ -8,7 +25,9 @@ ul {
 .ryver-view-header {
   height: 40px;
   width: 100%;
-  background-color: #00548B; }
+  background-color: #00548B;
+  color: #FFFFFF;
+  padding: 0 16px; }
 .ryver-view-body {
   background-color: #DEE9F0;
   height: calc(100% - 40px); }
