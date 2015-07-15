@@ -28,6 +28,7 @@
             if (params) {
                 params = JSON.parse(params);
                 setTitle(params);
+                setupEndpoint(params);
                 updateSharedState(params);
                 consumer({'body': google.hangout.getHangoutUrl()});
             }
@@ -43,8 +44,8 @@
         google.hangout.data.submitDelta(data);
     }
 
-    function setupEndpoint() {
-        var state = google.hangout.data.getState();
+    function setupEndpoint(params) {
+        var state = params || google.hangout.data.getState();
 
         if (!state) return null;
 
@@ -64,10 +65,10 @@
 
     function consumer(data) {
         console.debug('data: ', data);
-        console.debug('endpoint: ', setupEndpoint());
+        console.debug('endpoint: ', endpoint);
 
         //return $.ajax({
-        //    url: setupEndpoint(),
+        //    url: endpoint,
         //    type: 'POST',
         //    data: data
         //});
