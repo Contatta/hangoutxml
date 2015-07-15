@@ -67,11 +67,14 @@
         console.debug('data: ', data);
         console.debug('endpoint: ', endpoint);
 
-        //return $.ajax({
-        //    url: endpoint,
-        //    type: 'POST',
-        //    data: data
-        //});
+        if (data && endpoint) {
+            return $.ajax({
+                url: endpoint,
+                type: 'POST',
+                contentType: 'application/json',
+                data: data
+            });
+        }
     }
 
     function init() {
