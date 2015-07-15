@@ -28,7 +28,7 @@
             if (params) {
                 params = JSON.parse(params);
                 setTitle(params);
-                sharedState(params);
+                updateSharedState(params);
                 consumer({'body': google.hangout.getHangoutUrl()});
             }
 
@@ -39,7 +39,7 @@
         }
     }
 
-    function sharedState(data) {
+    function updateSharedState(data) {
         google.hangout.data.submitDelta(data);
     }
 
