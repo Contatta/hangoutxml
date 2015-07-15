@@ -77,6 +77,7 @@
                 url: endpoint,
                 type: 'POST',
                 contentType: 'application/json',
+                accepts: {'json': 'application/json'},
                 data: data,
                 headers: {
                     'Contatta-Session': state.session
