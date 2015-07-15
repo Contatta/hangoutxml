@@ -16,7 +16,7 @@
                 consumer({'body': google.hangout.getHangoutUrl()});
             }
 
-            google.hangout.data.onParticipantChange.add(onParticipantChange);
+            google.hangout.onParticipantsChanged.add(onParticipantChange);
             google.hangout.onApiReady.remove(onApiReady);
         }
     }
