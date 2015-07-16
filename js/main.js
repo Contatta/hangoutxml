@@ -2,9 +2,9 @@
     var endpoint = 'https://{instance}.ryver.com/api/1/odata.svc/workrooms({id})/Chat.PostMessage',
         state = null;
 
-    function setTitle(params) {
-        if (params && params.descriptor)
-            $('#ryver-room').text(params.descriptor);
+    function setTitle() {
+        if (state && state.descriptor)
+            $('#ryver-room').text(state.descriptor);
     }
 
     function onStateChange(evt) {
@@ -48,16 +48,18 @@
     function onApiReady(evt) {
         if (evt.isApiReady) {
             console.debug('api ready: ', evt);
-            var params = google.hangout.getStartData();
+            var startData = google.hangout.getStartData();
 
-            if (params) {
-                console.debug('params: ', params);
-                params = JSON.parse(params);
-                updateSharedState(params);
-                setTitle(params);
+            if (startData) {
+                state = JSON.parse(startData);
+                updateSharedState(state);
                 setupEndpoint();
                 consumer({'body': google.hangout.getHangoutUrl()});
+            } else {
+                state = google.hangout.data.getState();
             }
+
+            setTitle();
 
             google.hangout.data.onStateChanged.add(onStateChange);
             google.hangout.onParticipantsChanged.add(onParticipantsChange);
@@ -68,7 +70,6 @@
     }
 
     function updateSharedState(data) {
-        state = data;
         google.hangout.data.submitDelta(data);
     }
 
