@@ -44,15 +44,19 @@
     function addParticipants(participants) {
         participants = participants || [];
 
+        var currentUserId = google.hangout.getLocalParticipantId();
+
         for (var i=0; i < participants.length; i++) {
-            var person = participants[i]['person'],
-                avatar = $('<img />').addClass('participant-list__item-avatar').attr('src', person['image']['url']),
-                content = $('<span />').addClass('participant-list__item-content').text(person.displayName),
-                item = $('<li />').addClass('participant-list__item').attr('data-id', person.id);
+            if (currentUserId != participants[i]['id']) {
+                var person = participants[i]['person'],
+                    avatar = $('<img />').addClass('participant-list__item-avatar').attr('src', person['image']['url']),
+                    content = $('<span />').addClass('participant-list__item-content').text(person.displayName),
+                    item = $('<li />').addClass('participant-list__item').attr('data-id', person.id);
 
-            item.append(avatar, content);
+                item.append(avatar, content);
 
-            $('#ryver-participant-list').append(item);
+                $('#ryver-participant-list').append(item);
+            }
         }
     }
 
@@ -60,7 +64,7 @@
         for (var i=0; i < participants.length; i++) {
             var person = participants[i]['person'];
 
-            $("[data-id]='" + person.id + "'").fadeOut().remove();
+            $("li[data-id]='" + person.id + "'").fadeOut().remove();
         }
     }
 
