@@ -23,11 +23,12 @@ ul {
   margin: 0; }
 
 .ryver-view-header {
-  height: 40px;
-  line-height: 40px;
+  height: 48px;
+  line-height: 48px;
   width: 100%;
   background-color: #00548B;
   color: #FFFFFF;
+  font-size: 1.3rem;
   padding: 0 16px;
   overflow: hidden;
   text-overflow: ellipsis;
