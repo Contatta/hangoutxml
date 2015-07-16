@@ -47,9 +47,11 @@
 
     function onApiReady(evt) {
         if (evt.isApiReady) {
+            console.debug('api ready: ', evt);
             var params = google.hangout.getStartData();
 
             if (params) {
+                console.debug('params: ', params);
                 params = JSON.parse(params);
                 updateSharedState(params);
                 setTitle(params);
