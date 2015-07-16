@@ -45,7 +45,8 @@ ul {
   display: -ms-flexbox;
   display: flex;
   border-bottom: 1px solid #DDDDDD;
-  padding: 8px; }
+  padding: 8px;
+  background-color: #FFFFFF; }
   .participant-list__item-avatar {
     border-color: #cccccc;
     width: 48px;

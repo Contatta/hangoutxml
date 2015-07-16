@@ -54,6 +54,7 @@ ul {
         @include flexbox;
         border-bottom: 1px solid $color-alto;
         padding: $padding-size-s;
+        background-color: $color-white;
 
         &-avatar {
             @include round-avatar(medium);
