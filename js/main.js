@@ -36,7 +36,7 @@
     function onParticipantsRemoved(evt) {
         console.debug('participants removed: ', evt);
 
-        var participants = evt.removedParticpants;
+        var participants = evt.removedParticipants;
 
         for (var i=0; i < participants.length; i++) {
             var person = participants[i]['person'];
