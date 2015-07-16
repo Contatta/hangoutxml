@@ -26,6 +26,7 @@ html {
 ul {
     padding: 0;
     margin: 0;
+    list-style: none;
 }
 
 .ryver-view {
@@ -45,5 +46,23 @@ ul {
     &-body {
         background-color: $color-catskill-white;
         height: calc(100% - 40px);
+    }
+}
+
+.participant-list {
+    &__item {
+        @include flexbox;
+        border-bottom: 1px solid $color-alto;
+        padding: $padding-size-s;
+
+        &-avatar {
+            @include round-avatar(medium);
+        }
+
+        &-content {
+            @include flex(1, 0);
+            @include align-self(center);
+            padding: 0 8px;
+        }
     }
 }

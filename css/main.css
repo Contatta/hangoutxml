@@ -20,7 +20,8 @@ html {
 
 ul {
   padding: 0;
-  margin: 0; }
+  margin: 0;
+  list-style: none; }
 
 .ryver-view-header {
   height: 48px;
@@ -36,5 +37,34 @@ ul {
 .ryver-view-body {
   background-color: #DEE9F0;
   height: calc(100% - 40px); }
+
+.participant-list__item {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flexbox;
+  display: flex;
+  border-bottom: 1px solid #DDDDDD;
+  padding: 8px; }
+  .participant-list__item-avatar {
+    border-color: #cccccc;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border-width: 3px;
+    padding: 2px;
+    background-color: #FFFFFF;
+    border-style: solid; }
+  .participant-list__item-content {
+    -moz-flex: 1 0;
+    -moz-box-flex: 1;
+    -ms-flex: 1 0;
+    -webkit-flex: 1 0;
+    -webkit-box-flex: 1;
+    flex: 1 0;
+    -ms-align-self: center;
+    -webkit-align-self: center;
+    align-self: center;
+    padding: 0 8px; }
 
 /*# sourceMappingURL=main.css.map */
