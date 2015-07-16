@@ -46,9 +46,12 @@
         var currentUserId = google.hangout.getLocalParticipantId();
 
         for (var i=0; i < participants.length; i++) {
-            if (currentUserId != participants[i]['id']) {
-                var person = participants[i]['person'],
-                    avatar = $('<img />').addClass('participant-list__item-avatar').attr('src', person['image']['url']),
+            var participant = participants[i],
+                person = participant['person'],
+                exists = !!$("li[data-id='" + person.id + "']").length;
+
+            if (currentUserId != participant['id'] && !exists) {
+                var avatar = $('<img />').addClass('participant-list__item-avatar').attr('src', person['image']['url']),
                     content = $('<span />').addClass('participant-list__item-content').text(person.displayName),
                     item = $('<li />').addClass('participant-list__item').attr('data-id', person.id);
 
