@@ -17,14 +17,32 @@
     }
 
     function onParticipantsAdded(evt) {
-        // todo: add participants to list
         // todo: set room descriptor in header bar
         console.debug('participants added: ', evt);
+        var participants = evt.addedParticipants;
+
+        for (var i=0; i < participants.length; i++) {
+            var person = participants[i]['person'],
+                avatar = $('<img />').addClass('participant-list__item-avatar').attr('src', person['image']['url']),
+                content = $('<span />').addClass('participant-list__item-content').text(person.displayName),
+                item = $('<li />').addClass('participant-list__item').attr('data-id', person.id);
+
+            item.append(avatar, content);
+
+            $('#ryver-participant-list').append(item);
+        }
     }
 
     function onParticipantsRemoved(evt) {
-        // todo: remove participants from list
         console.debug('participants removed: ', evt);
+
+        var participants = evt.removedParticpants;
+
+        for (var i=0; i < participants.length; i++) {
+            var person = participants[i]['person'];
+
+            $("[data-id]='" + person.id + "'").fadeOut().remove();
+        }
     }
 
     function onApiReady(evt) {
