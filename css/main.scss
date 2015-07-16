@@ -63,7 +63,7 @@ ul {
         &-content {
             @include flex(1, 0);
             @include align-self(center);
-            padding: 0 8px;
+            padding: 0 $padding-size-s;
         }
     }
 }
