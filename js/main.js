@@ -5,7 +5,6 @@
     function consumer(data) {
         console.debug('data: ', data);
         console.debug('endpoint: ', endpoint);
-        console.debug('state: ', state);
 
         if (data && endpoint) {
             return $.ajax({
@@ -64,7 +63,7 @@
         for (var i=0; i < participants.length; i++) {
             var person = participants[i]['person'];
 
-            $("li[data-id]='" + person.id + "'").fadeOut().remove();
+            $("li[data-id='" + person.id + "']").fadeOut().remove();
         }
     }
 
