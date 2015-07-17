@@ -48,7 +48,7 @@
         for (var i=0; i < participants.length; i++) {
             var participant = participants[i],
                 person = participant['person'],
-                exists = !!$("li[data-id='" + person.id + "']").length;
+                exists = !!$("li[data-id='" + participant.id + "']").length;
 
             if (currentUserId != participant['id'] && !exists) {
                 var avatar = $('<img />').addClass('participant-list__item-avatar').attr('src', person['image']['url']),
