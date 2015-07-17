@@ -53,9 +53,10 @@
             if (currentUserId != participant['id'] && !exists) {
                 var avatar = $('<img />').addClass('participant-list__item-avatar').attr('src', person['image']['url']),
                     content = $('<span />').addClass('participant-list__item-content').text(person.displayName),
-                    item = $('<li />').addClass('participant-list__item').attr('data-id', person.id);
+                    item = $('<li />').addClass('participant-list__item').attr('data-id', participant.id);
 
                 item.append(avatar, content);
+                item.on('click', onParticipantClicked);
 
                 $('#ryver-participant-list').append(item);
             }
@@ -68,6 +69,61 @@
 
             $("li[data-id='" + person.id + "']").fadeOut().remove();
         }
+    }
+
+    // Displays the video feed that would normally be
+    // visible if the app.  The DefaultVideoFeed generally
+    // shows feeds based on their volume level.
+    function showDefaultFeed() {
+
+        // Remove the highlighting.
+        if (currentHighlightedParticipantId) {
+            google.hangout.av.clearAvatar(currentHighlightedParticipantId);
+        }
+
+        currentHighlightedParticipantId = null;
+
+        var feed = google.hangout.layout.getDefaultVideoFeed();
+        var canvas = google.hangout.layout.getVideoCanvas();
+
+        canvas.setVideoFeed(feed);
+        canvas.setWidth(600);
+        canvas.setPosition(300, 50);
+        canvas.setVisible(true);
+
+        // Update the text
+        //updateDisplayedParticipant();
+    }
+
+    // Displays the video feed for a given participant
+    function lockParticipant(partId) {
+
+        // Remove any previous highlighting.
+        if (currentHighlightedParticipantId) {
+            google.hangout.av.clearAvatar(currentHighlightedParticipantId);
+        }
+
+        // Remember who is selected
+        currentHighlightedParticipantId = partId;
+        // Highlight this user with the red rectangle.
+        google.hangout.av.setAvatar(currentHighlightedParticipantId,
+            'http://mediakit001.appspot.com/static/images/participantHighlight.png');
+
+        // Set the feed
+        var feed = google.hangout.layout.createParticipantVideoFeed(partId);
+        var canvas = google.hangout.layout.getVideoCanvas();
+
+        canvas.setVideoFeed(feed);
+        canvas.setWidth(600);
+        canvas.setPosition(300, 50);
+        canvas.setVisible(true);
+
+        // Update the text
+        //updateDisplayedParticipant();
+    }
+
+    function onParticipantClicked(evt) {
+        console.debug('participant clicked: ', evt);
     }
 
     function updateSharedState(data) {
