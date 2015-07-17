@@ -65,9 +65,9 @@
 
     function removeParticipants(participants) {
         for (var i=0; i < participants.length; i++) {
-            var person = participants[i]['person'];
+            var participant = participants[i];
 
-            $("li[data-id='" + person.id + "']").fadeOut().remove();
+            $("li[data-id='" + participant.id + "']").fadeOut().remove();
         }
     }
 
