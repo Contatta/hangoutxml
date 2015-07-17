@@ -1,6 +1,7 @@
 (function(gadgets, google, $) {
     var endpoint = 'https://{instance}.ryver.com/api/1/odata.svc/workrooms({id})/Chat.PostMessage',
-        state = null;
+        state = null,
+        currentHighlightedParticipantId = null;
 
     function consumer(data) {
         console.debug('data: ', data);
@@ -69,6 +70,12 @@
 
             $("li[data-id='" + participant.id + "']").fadeOut().remove();
         }
+
+        if (currentHighlightedParticipantId &&
+            !google.hangout.getParticipantById(currentHighlightedParticipantId)) {
+            currentHighlightedParticipantId = null;
+            showDefaultFeed();
+        }
     }
 
     // Displays the video feed that would normally be
@@ -124,6 +131,8 @@
 
     function onParticipantClicked(evt) {
         console.debug('participant clicked: ', evt);
+
+        lockParticipant($(this).attr('data-id'));
     }
 
     function updateSharedState(data) {
