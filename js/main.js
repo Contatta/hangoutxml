@@ -1,44 +1,58 @@
 (function(gadgets, google, $) {
-    var endpoint = 'https://{instance}.ryver.com/api/1/odata.svc/workrooms({id})/Chat.PostMessage',
+    var endpoint = 'https://{0}.ryver.com/api/1/odata.svc/workrooms({1})/Chat.PostMessage',
+        messageText = 'A Hangout was just started for the {0} team. Click to join: {1}',
         state = null,
         currentHighlightedParticipantId = null;
 
+    function substitute() {
+        if (!arguments.length) return;
+
+        var source = arguments.shift(),
+            map = {};
+
+        for (var i=0; i<arguments.length; i++)
+            map['{' + i + '}'] = arguments[i];
+
+        var re = new RegExp(Object.keys(map).join("|"),"gi");
+
+        return source.replace(re, function(matched) {
+            return map[matched.toLowerCase()];
+        });
+    }
+
     function consumer(data) {
         console.debug('data: ', data);
-        console.debug('endpoint: ', endpoint);
 
-        if (data && endpoint) {
+        if (data) {
+            var stateData = getState(),
+                url = substitute(endpoint, stateData.instance, stateData.id);
+
             return $.ajax({
-                url: endpoint,
+                url: url,
                 type: 'POST',
                 contentType: 'application/json',
                 accepts: {'json': 'application/json'},
                 data: JSON.stringify(data),
                 headers: {
-                    'Contatta-Session': state.session
+                    'Contatta-Session': stateData.session
                 }
             });
         }
     }
 
-    function setupEndpoint() {
-        var data = state || google.hangout.data.getState();
+    function postHangoutLink() {
+        var url = google.hangout.getHangoutUrl(),
+            stateData = getState(),
+            body = substitute(messageText, stateData.instance, url);
 
-        var map = {
-            '{instance}': data.instance,
-            '{id}': data.id
-        };
-
-        var re = new RegExp(Object.keys(map).join("|"),"gi");
-
-        endpoint = endpoint.replace(re, function(matched) {
-            return map[matched.toLowerCase()];
-        });
+        return consumer({'body': body});
     }
 
     function setTitle() {
-        if (state && state.descriptor)
-            $('#ryver-room').text(state.descriptor);
+        var stateData = getState();
+
+        if (stateData && stateData.descriptor)
+            $('#ryver-room').text(stateData.descriptor);
     }
 
     function addParticipants(participants) {
@@ -135,8 +149,15 @@
         lockParticipant($(this).attr('data-id'));
     }
 
-    function updateSharedState(data) {
-        google.hangout.data.submitDelta(data);
+    function getState() {
+        return state || google.hangout.data.getState();
+    }
+
+    function setState(data, shouldUpdate) {
+        state = data;
+
+        if (shouldUpdate)
+            google.hangout.data.submitDelta(data);
     }
 
     function onStateChange(evt) {
@@ -164,14 +185,15 @@
             var startData = google.hangout.getStartData();
 
             if (startData) {
-                state = JSON.parse(startData);
-                updateSharedState(state);
-                setupEndpoint();
-                consumer({'body': google.hangout.getHangoutUrl()});
+                console.debug('startData: ', startData);
+                setState(JSON.parse(startData), true);
+                postHangoutLink();
             } else {
-                state = google.hangout.data.getState();
+                setState(google.hangout.data.getState(), false);
                 addParticipants(google.hangout.getParticipants());
             }
+
+            console.debug('state: ', state);
 
             setTitle();
 
