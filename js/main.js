@@ -7,11 +7,11 @@
     function substitute() {
         if (!arguments.length) return;
 
-        var source = arguments.shift(),
+        var source = arguments[0],
             map = {};
 
         for (var i=0; i<arguments.length; i++)
-            map['{' + i + '}'] = arguments[i];
+            map['{' + i + '}'] = arguments[i+1];
 
         var re = new RegExp(Object.keys(map).join("|"),"gi");
 
