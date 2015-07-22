@@ -7,13 +7,16 @@
     function substitute() {
         if (!arguments.length) return;
 
-        var source = arguments[0],
+        var args = Array.prototype.slice.call(arguments),
+            source = args.shift(),
             map = {};
 
-        for (var i=0; i<arguments.length; i++)
-            map['{' + i + '}'] = arguments[i+1];
+        for (var i=0; i<args.length; i++)
+            map['{' + i + '}'] = args[i];
 
-        var re = new RegExp(Object.keys(map).join("|"),"gi");
+        var expression = Object.keys(map).join("|"),
+            escaped = expression.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"),
+            re = new RegExp(escaped,"gi");
 
         return source.replace(re, function(matched) {
             return map[matched.toLowerCase()];
