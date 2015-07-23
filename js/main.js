@@ -46,7 +46,7 @@
     function postHangoutLink() {
         var url = google.hangout.getHangoutUrl(),
             stateData = getState(),
-            body = substitute(messageText, stateData.instance, url);
+            body = substitute(messageText, stateData.descriptor, url);
 
         return consumer({'body': body});
     }
