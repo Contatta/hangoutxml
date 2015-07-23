@@ -15,7 +15,7 @@
             map['{' + i + '}'] = args[i];
 
         var expression = Object.keys(map).join("|"),
-            escaped = expression.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&"),
+            escaped = expression.replace(/[-[\]{}()*+?.,\\^$#\s]/g, "\\$&"),
             re = new RegExp(escaped,"gi");
 
         return source.replace(re, function(matched) {
