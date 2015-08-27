@@ -1,5 +1,5 @@
 (function(gadgets, google, $) {
-    var endpoint = 'https://{0}.ryver.com/api/1/odata.svc/workrooms({1})/Chat.PostMessage',
+    var endpoint = 'https://{0}.ryver.com/api/1/odata.svc/{1}({2})/Chat.PostMessage',
         messageText = 'A Hangout was just started for the {0} team. Click to join: {1}',
         state = null,
         currentHighlightedParticipantId = null;
@@ -28,7 +28,8 @@
 
         if (data) {
             var stateData = getState(),
-                url = substitute(endpoint, stateData.instance, stateData.id);
+                entity = stateData.isGroupChat ? 'workrooms' : 'users',
+                url = substitute(endpoint, stateData.instance, entity, stateData.id);
 
             return $.ajax({
                 url: url,
