@@ -1,7 +1,7 @@
 (function(gadgets, google, $) {
     var endpoint = 'https://{0}.ryver.com/api/1/odata.svc/{1}({2})/Chat.PostMessage',
-        teamMessageText = 'A Hangout was just started for the {0} team. Click to join: {1}.',
-        userMessageText = '{0} just started a Hangout. Click to join: {1}.',
+        teamMessageText = 'A Google Hangout was just started for the {0} team. Click to join: {1}.',
+        userMessageText = '{0} is inviting you to a Google Hangout. Click to join: {1}.',
         state = null,
         currentHighlightedParticipantId = null;
 
