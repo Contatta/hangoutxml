@@ -54,10 +54,11 @@
     }
 
     function setTitle() {
-        var stateData = getState();
+        var stateData = getState(),
+            room = $('#ryver-room'),
+            title = (stateData.isGroupChat) ? (stateData.descriptor ? stateData.descriptor : 'Team') : '1:1';
 
-        if (stateData && stateData.descriptor)
-            $('#ryver-room').text(stateData.descriptor);
+        room.text(title);
     }
 
     function addParticipants(participants) {
