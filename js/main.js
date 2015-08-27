@@ -24,8 +24,6 @@
     }
 
     function consumer(data) {
-        console.debug('data: ', data);
-
         if (data) {
             var stateData = getState(),
                 entity = stateData.isGroupChat ? 'workrooms' : 'users',
@@ -149,7 +147,7 @@
     }
 
     function onParticipantClicked(evt) {
-        console.debug('participant clicked: ', evt);
+        console.log('participant clicked: ', evt);
 
         lockParticipant($(this).attr('data-id'));
     }
@@ -166,39 +164,35 @@
     }
 
     function onStateChange(evt) {
-        console.debug('state changed: ', evt);
+        console.log('state changed: ', evt);
         state = evt.state;
     }
 
     function onParticipantsChange(evt) {
-        console.debug('participants changed: ', evt);
+        console.log('participants changed: ', evt);
     }
 
     function onParticipantsAdded(evt) {
-        console.debug('participants added: ', evt);
+        console.log('participants added: ', evt);
         addParticipants(evt.addedParticipants);
     }
 
     function onParticipantsRemoved(evt) {
-        console.debug('participants removed: ', evt);
+        console.log('participants removed: ', evt);
         removeParticipants(evt.removedParticipants);
     }
 
     function onApiReady(evt) {
         if (evt.isApiReady) {
-            console.debug('api ready: ', evt);
             var startData = google.hangout.getStartData();
 
             if (startData) {
-                console.debug('startData: ', startData);
                 setState(JSON.parse(startData), true);
                 postHangoutLink();
             } else {
                 setState(google.hangout.data.getState(), false);
                 addParticipants(google.hangout.getParticipants());
             }
-
-            console.debug('state: ', state);
 
             setTitle();
 
