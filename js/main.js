@@ -1,6 +1,7 @@
 (function(gadgets, google, $) {
     var endpoint = 'https://{0}.ryver.com/api/1/odata.svc/{1}({2})/Chat.PostMessage',
-        messageText = 'A Hangout was just started for the {0} team. Click to join: {1}',
+        teamMessageText = 'A Hangout was just started for the {0} team. Click to join: {1}.',
+        userMessageText = '{0} just started a Hangout. Click to join: {1}.',
         state = null,
         currentHighlightedParticipantId = null;
 
@@ -45,7 +46,8 @@
     function postHangoutLink() {
         var url = google.hangout.getHangoutUrl(),
             stateData = getState(),
-            body = substitute(messageText, stateData.descriptor, url),
+            message = stateData.isGroupChat ? teamMessageText : userMessageText,
+            body = substitute(message, stateData.descriptor, url),
             extras = {'type': 'hangouts'};
 
         return consumer({'body': body, 'extras': extras});
