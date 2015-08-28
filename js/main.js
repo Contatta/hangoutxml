@@ -27,7 +27,7 @@
     function consumer(data) {
         if (data) {
             var stateData = getState(),
-                entity = stateData.isGroupChat ? 'workrooms' : 'users',
+                entity = (stateData.isGroupChat === 'true') ? 'workrooms' : 'users',
                 url = substitute(endpoint, stateData.instance, entity, stateData.id);
 
             return $.ajax({
@@ -46,7 +46,7 @@
     function postHangoutLink() {
         var url = google.hangout.getHangoutUrl(),
             stateData = getState(),
-            message = stateData.isGroupChat ? teamMessageText : userMessageText,
+            message = (stateData.isGroupChat === 'true') ? teamMessageText : userMessageText,
             body = substitute(message, stateData.descriptor, url),
             extras = {'type': 'hangouts'};
 
@@ -56,7 +56,7 @@
     function setTitle() {
         var stateData = getState(),
             room = $('#ryver-room'),
-            title = (stateData.isGroupChat) ? (stateData.descriptor ? stateData.descriptor : 'Team') : '1:1';
+            title = (stateData.isGroupChat === 'true') ? (stateData.descriptor ? stateData.descriptor : 'Team') : '1:1';
 
         room.text(title);
     }
