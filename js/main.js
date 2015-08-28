@@ -2,6 +2,7 @@
     var endpoint = 'https://{0}.ryver.com/api/1/odata.svc/{1}({2})/Chat.PostMessage',
         teamMessageText = 'A Google Hangout was just started for the {0} team. Click to join: {1}.',
         userMessageText = '{0} is inviting you to a Google Hangout. Click to join: {1}.',
+        home = 'https://googlehangoutxml.ryver.com/{0}',
         state = null,
         currentHighlightedParticipantId = null;
 
@@ -48,7 +49,7 @@
             stateData = getState(),
             message = (stateData.isGroupChat === 'true') ? teamMessageText : userMessageText,
             body = substitute(message, stateData.descriptor, url),
-            extras = {'type': 'hangouts'};
+            extras = {'type': 'hangouts', 'icon': substitute(home, 'images/icon-hangouts.png')};
 
         return consumer({'body': body, 'extras': extras});
     }
